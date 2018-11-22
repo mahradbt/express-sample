@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>test</title>
+</head>
+<body>
+	<script type="text/javascript" src="./jquery.js"></script>
+	<script type="text/javascript">
+  $(document).ready(function(){
+
+$.ajax({
+  url:"http://localhost:3000/download",
+  method:"POST",
+  type:"POST",
+  xhrFields: {
+            responseType: 'blob'
+  },
+  success:function(response, status, xhr){
+    var fileName = xhr.getResponseHeader('Content-Disposition').split("=")[1]
+    console.log(fileName)
+    var a = document.createElement('a');
+            var url = window.URL.createObjectURL(response);
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(url);
+  }
+});
+
+  });
+</script>
+</body>
+</html>
